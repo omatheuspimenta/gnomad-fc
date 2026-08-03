@@ -108,7 +108,7 @@ ${JSON.stringify(filters, null, 2)}`;
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-slate-500 uppercase">Frequency (AF) Range</label>
                                         <div className="flex items-center gap-2">
-                                            <input type="range" min="0" max="0.1" step="0.0001" value={filters.minAF} onChange={e => setFilters({ ...filters, minAF: parseFloat(e.target.value) })} className="flex-1" />
+                                            <input type="range" min="0" max="1" step="0.0001" value={filters.minAF} onChange={e => setFilters({ ...filters, minAF: parseFloat(e.target.value) })} className="flex-1" />
                                             <span className="text-xs font-mono bg-white border px-2 py-1 rounded">{filters.minAF.toFixed(4)}</span>
                                         </div>
                                     </div>
