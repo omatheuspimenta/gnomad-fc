@@ -121,6 +121,7 @@ HAIL_SCHEMA = {
             consequences=hl.tarray(hl.tstr),
             impact=hl.tstr,
             is_canonical=hl.tbool,
+            is_mane_select=hl.tbool,
         )
     ),
     # Samples - nested structure (optional)
@@ -263,6 +264,7 @@ class Transcript(BaseClass):
     consequence: Optional[List[str]] = None
     impact: Optional[str] = None
     isCanonical: Optional[bool] = None
+    isManeSelect: Optional[bool] = None
 
     def get_top_level_dict(self) -> Dict[str, Any]:
         return dict(
@@ -750,6 +752,7 @@ def variant_to_dict(
                 "consequences": t.consequence if t.consequence else [],
                 "impact": t.impact,
                 "is_canonical": t.isCanonical if t.isCanonical else False,
+                "is_mane_select": t.isManeSelect if t.isManeSelect else False,
             }
             for t in variant.transcripts
         ]
@@ -926,7 +929,7 @@ def convert_to_hail(
             ht.transcripts.filter(lambda t: t.is_canonical),
         ),
         all_consequences=hl.set(
-            hl.flatten(ht.transcripts.map(lambda t: t.consequences))
+            hl.flatten(ht.transcripts.filter(lambda t: t.is_mane_select).map(lambda t: t.consequences))
         ),
         genes=hl.set(ht.transcripts.map(lambda t: t.hgnc).filter(hl.is_defined)),
     )
