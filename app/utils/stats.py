@@ -24,6 +24,11 @@ def get_global_stats_query(query_conditions: Dict[str, Any]) -> Dict[str, Any]:
                 "extended_stats": {"field": "gnomad_af"}
             },
             
+            # Include aPRoVAR MAF
+            "local_af_stats": {
+                "extended_stats": {"field": "af"}
+            },
+            
             # 3. ClinVar Significance
             "clinvar": {
                 "terms": {"field": "clinvar_significance.keyword", "size": 20}
@@ -153,8 +158,8 @@ def format_stats_response(agg_response: Dict[str, Any], total_count: int) -> Dic
     return {
         "count": total_count,
         "uniqueTypes": len(variant_type_data),
-        "meanAF": aggs['gnomad_af_stats']['avg'] or 0,
-        "maxAF": aggs['gnomad_af_stats']['max'] or 0,
+        "localMeanAF": aggs['local_af_stats']['avg'] or 0,
+        "gnomadMeanAF": aggs['gnomad_af_stats']['max'] or 0,
         "clinvarCount": sum(b['doc_count'] for b in aggs['clinvar']['buckets']),
         "pieData": pie_data,
         "localPieData": local_pie_data,

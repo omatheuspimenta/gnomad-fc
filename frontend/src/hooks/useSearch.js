@@ -119,9 +119,10 @@ export const useSearch = () => {
         // Fallback to client-side calculation (e.g. for single variant search or legacy)
         if (!filteredVariants || filteredVariants.length === 0) return null;
 
-        const afs = filteredVariants.map(v => v.gnomad_af).filter(n => typeof n === 'number');
-        const maxAF = afs.length ? Math.max(...afs) : 0;
-        const meanAF = calculateMean(afs);
+        const gnomadAfs = filteredVariants.map(v => v.gnomad_af).filter(n => typeof n === 'number');
+        const gnomadMeanAF = calculateMean(gnomadAfs);
+        const localAfs = filteredVariants.map(v => v.af).filter(n => typeof n === 'number');
+        const localMeanAF = calculateMean(localAfs);
         const clinvarCount = filteredVariants.filter(v => v.clinvar_significance).length;
 
         const freqCats = countValues(filteredVariants.map(v => categorizeFrequency(v.gnomad_af)));
@@ -179,7 +180,7 @@ export const useSearch = () => {
         return {
             count: filteredVariants.length,
             uniqueTypes: new Set(filteredVariants.map(v => v.variant_type)).size,
-            meanAF, maxAF, clinvarCount, pieData, localPieData, popData, scatterData, variantTypeData, qualityDist, conservationData, coverage
+            localMeanAF, gnomadMeanAF, clinvarCount, pieData, localPieData, popData, scatterData, variantTypeData, qualityDist, conservationData, coverage
         };
     }, [filteredVariants, rawData, totalVariants]);
 

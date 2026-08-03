@@ -16,8 +16,8 @@ class ConservationStat(BaseModel):
 class GeneStatistics(BaseModel):
     count: int
     uniqueTypes: int
-    meanAF: float
-    maxAF: float
+    localMeanAF: float
+    gnomadMeanAF: float
     clinvarCount: int
     pieData: List[StatItem]
     localPieData: List[StatItem]

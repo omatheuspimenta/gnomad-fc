@@ -628,7 +628,7 @@ def variant_to_dict(
 
         # AF: may be comma-separated for multi-allelic sites
         # Use AF_excl if present (reprocessed variants), otherwise use AF
-        af_source = vcf_info.get("AF_excl") or vcf_info.get("AF")
+        af_source = vcf_info.get("AF_EXCL") or vcf_info.get("AF")
         if af_source is not None:
             try:
                 af_values = [float(x) for x in str(af_source).split(",")]

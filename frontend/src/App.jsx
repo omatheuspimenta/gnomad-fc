@@ -60,8 +60,8 @@ ${JSON.stringify(filters, null, 2)}`;
                                 <StatCard title="Total Variants" value={stats.count.toLocaleString()} icon="layers" />
                                 <StatCard title="Variant Types" value={stats.uniqueTypes} icon="git-branch" />
                                 {/* <StatCard title="Mean AF" value={stats.meanAF.toExponential(1)} icon="activity" subtext="Global gnomAD" /> */}
-                                <StatCard title="Mean AF" value={stats.meanAF.toFixed(4)} icon="activity" subtext="Global gnomAD" />
-                                <StatCard title="Max AF" value={stats.maxAF.toFixed(3)} icon="trending-up" />
+                                <StatCard title="Mean MAF aPRoVAR" value={stats.localMeanAF.toFixed(4)} icon="activity" subtext="Mean MAF aPRoVAR" />
+                                <StatCard title="Mean MAF gnomAD" value={stats.gnomadMeanAF.toFixed(3)} icon="trending-up" />
                                 <StatCard title="ClinVar" value={stats.clinvarCount} icon="clipboard-check" color="text-purple-600" />
                                 <StatCard title="Coverage" value={stats.coverage} icon="pie-chart" color="text-slate-600" />
                             </div>
@@ -165,7 +165,7 @@ ${JSON.stringify(filters, null, 2)}`;
                                                             </li>
                                                             <li className="flex gap-3">
                                                                 <Icon name="trending-up" size={18} className="text-emerald-500 shrink-0" />
-                                                                <span>Max Allele Frequency observed globally is <strong>{(stats.maxAF * 100).toFixed(2)}%</strong>.</span>
+                                                                <span>Mean Allele Frequency observed globally is <strong>{(stats.gnomadMeanAF * 100).toFixed(2)}%</strong>.</span>
                                                             </li>
                                                         </ul>
                                                     </div>
