@@ -45,10 +45,10 @@ def get_global_stats_query(query_conditions: Dict[str, Any]) -> Dict[str, Any]:
                     "field": "gnomad_af",
                     "ranges": [
                         {"to": 0.0001, "key": "Ultra-rare (<0.01%)"},
-                        {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
-                        {"from": 0.001, "to": 0.01, "key": "Low freq (0.1-1%)"},
-                        {"from": 0.01, "to": 0.05, "key": "Common (1-5%)"},
-                        {"from": 0.05, "key": "Very common (>5%)"}
+                        # {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
+                        {"from": 0.0001, "to": 0.01, "key": "Rare (0.01-1%)"},
+                        {"from": 0.01, "to": 0.5, "key": "Polymorphic (1-50%)"},
+                        # {"from": 0.05, "key": "Very common (>5%)"}
                     ]
                 }
             },
@@ -59,10 +59,10 @@ def get_global_stats_query(query_conditions: Dict[str, Any]) -> Dict[str, Any]:
                     "field": "af",
                     "ranges": [
                         {"to": 0.0001, "key": "Ultra-rare (<0.01%)"},
-                        {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
-                        {"from": 0.001, "to": 0.01, "key": "Low freq (0.1-1%)"},
-                        {"from": 0.01, "to": 0.05, "key": "Common (1-5%)"},
-                        {"from": 0.05, "key": "Very common (>5%)"}
+                        # {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
+                        {"from": 0.0001, "to": 0.01, "key": "Rare (0.01-1%)"},
+                        {"from": 0.01, "to": 0.5, "key": "Polymorphic (1-50%)"},
+                        # {"from": 0.05, "key": "Very common (>5%)"}
                     ]
                 }
             },
