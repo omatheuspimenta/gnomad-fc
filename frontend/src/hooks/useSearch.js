@@ -81,7 +81,7 @@ export const useSearch = () => {
 
         const filtered = variants.filter(v => {
             const af = v.gnomad_af !== undefined ? v.gnomad_af : 0;
-            const cons = (v.all_consequences || []).join(' ').toLowerCase();
+            // const cons = (v.all_consequences || []).join(' ').toLowerCase();
             const vType = (v.variant_type || '').toLowerCase();
             const clinvarSig = (v.clinvar_significance || '').toLowerCase();
             const rsidVal = (v.rsid || '').toLowerCase();
@@ -90,7 +90,19 @@ export const useSearch = () => {
             if (af < filters.minAF || af > filters.maxAF) return false;
             const fMissing = v.f_missing !== undefined && v.f_missing !== null ? v.f_missing : 0;
             if (fMissing > filters.maxFMissing) return false;
-            if (filters.consequence && !cons.includes(filters.consequence.toLowerCase())) return false;
+            // if (filters.consequence && !cons.includes(filters.consequence.toLowerCase())) return false;
+            if (filters.consequence) {
+                    const term = filters.consequence.toLowerCase();
+                    // Check if any of the consequences match the filter term
+                    const hasMatch = (v.all_consequences || []).some(c => {
+    			const consequence = c.toLowerCase();
+                // use .startsWith() to match the beginning of the consequence string
+                // This way, "intron" will match "intron_variant" but not "non_coding_transcript_intron_variant"
+    			return consequence.startsWith(term) || consequence === term;
+                    });
+    
+                    if (!hasMatch) return false;
+                }
             if (filters.variantType && !vType.includes(filters.variantType.toLowerCase())) return false;
             if (filters.clinvar && !clinvarSig.includes(filters.clinvar.toLowerCase())) return false;
             if (filters.rsid && !rsidVal.includes(filters.rsid.toLowerCase())) return false;

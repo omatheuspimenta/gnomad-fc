@@ -67,3 +67,5 @@ data/logs
 
 !certs/.gitkeep
 certs/
+
+data/example.json
