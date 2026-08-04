@@ -124,9 +124,10 @@ export const useSearch = () => {
 
     const stats = useMemo(() => {
         // If we have server-side statistics (Global Stats), use them directly
-        if (rawData && rawData.statistics) {
-            return rawData.statistics;
-        }
+        // Commented to allow client-side calculation for now and update all stats based on filteredVariants
+        // if (rawData && rawData.statistics) {
+        //     return rawData.statistics;
+        // }
 
         // Fallback to client-side calculation (e.g. for single variant search or legacy)
         if (!filteredVariants || filteredVariants.length === 0) return null;
