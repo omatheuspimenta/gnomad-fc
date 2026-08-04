@@ -57,13 +57,54 @@ ${JSON.stringify(filters, null, 2)}`;
                     <div className="space-y-6 animate-fade-in">
                         {stats && (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                                <StatCard title="Total Variants" value={stats.count.toLocaleString()} icon="layers" />
-                                <StatCard title="Variant Types" value={stats.uniqueTypes} icon="git-branch" />
+                                {/* <StatCard title="Total Variants" value={stats.count.toLocaleString()} icon="layers" /> */}
+                                <StatCard                                                                                                                                                
+                                    title="Total Variants"                                                                                                                               
+                                    value={stats.count.toLocaleString()}                                                                                                                 
+                                    icon="layers"                                                                                                                                        
+                                    onClick={() => setActiveTab('table')}                                                                                                                
+                                    tooltip="Click to view the data table"                                                                                
+                                /> 
+                                {/* <StatCard title="Variant Types" value={stats.uniqueTypes} icon="git-branch" /> */}
+                                <StatCard                                                                                                                                                
+                                    title="Variant Types"                                                                                                                                
+                                    value={stats.uniqueTypes}                                                                                                                            
+                                    icon="git-branch"                                                                                                                                    
+                                    onClick={() => setActiveTab('variantTypes')}                                                                                                         
+                                    tooltip="Click to view charts and distribution by variant types"                                                                           
+                                />
                                 {/* <StatCard title="Mean AF" value={stats.meanAF.toExponential(1)} icon="activity" subtext="Global gnomAD" /> */}
-                                <StatCard title="Mean MAF aPRoVAR" value={stats.localMeanAF.toFixed(4)} icon="activity" subtext="Mean MAF aPRoVAR" />
-                                <StatCard title="Mean MAF gnomAD" value={stats.gnomadMeanAF.toFixed(3)} icon="trending-up" />
-                                <StatCard title="ClinVar" value={stats.clinvarCount} icon="clipboard-check" color="text-purple-600" />
-                                <StatCard title="Coverage" value={stats.coverage} icon="pie-chart" color="text-slate-600" />
+                                {/* <StatCard title="Mean MAF aPRoVAR" value={stats.localMeanAF.toFixed(4)} icon="activity" subtext="Mean MAF aPRoVAR" /> */}
+                                <StatCard                                                                                                                                                
+                                    title="Mean MAF aPRoVAR"                                                                                                                             
+                                    value={stats.localMeanAF.toFixed(4)}                                                                                                                 
+                                    icon="activity"                                                                                                                                      
+                                    subtext="Mean MAF aPRoVAR"                                                                                                                           
+                                    tooltip="Distribution by allele frequency - aPRoVAR"
+                                />
+                                {/* <StatCard title="Mean MAF gnomAD" value={stats.gnomadMeanAF.toFixed(3)} icon="trending-up" /> */}
+                                <StatCard                                                                                                                                                
+                                    title="Mean MAF gnomAD"                                                                                                                              
+                                    value={stats.gnomadMeanAF.toFixed(3)}                                                                                                                
+                                    icon="trending-up"                                                                                                                                   
+                                    tooltip="Distribution by allele frequency - gnomAD"
+                                />
+                                {/* <StatCard title="ClinVar" value={stats.clinvarCount} icon="clipboard-check" color="text-purple-600" /> */}
+                                <StatCard                                                                                                                                                
+                                    title="ClinVar"                                                                                                                                      
+                                    value={stats.clinvarCount}                                                                                                                           
+                                    icon="clipboard-check"                                                                                                                               
+                                    color="text-purple-600" 
+                                    tooltip="Variants with clinical significance reported in ClinVar"
+                                />
+                                {/* <StatCard title="Coverage" value={stats.coverage} icon="pie-chart" color="text-slate-600" /> */}
+                                <StatCard 
+                                    title="Coverage" 
+                                    value={stats.coverage} 
+                                    icon="pie-chart" 
+                                    color="text-slate-600" 
+                                    tooltip="This metric represents the proportion of variants with coverage data."
+                                />
                             </div>
                         )}
 

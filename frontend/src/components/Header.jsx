@@ -10,7 +10,19 @@ const Header = ({ activeTab, setActiveTab }) => {
                 <div className="flex items-center justify-between pb-4">
                     <div className="flex items-center gap-4">
 
-                        <IconLogo className="h-12 w-auto text-white" />
+                        {/* <IconLogo className="h-12 w-auto text-white" /> */}
+                        {/* <IconLogo 
+                            className="h-12 w-auto text-white cursor-pointer" 
+                            onClick={() => setActiveTab('home')}
+                            title="Home"
+                        /> */}
+                        <div 
+                            onClick={() => setActiveTab('home')}
+                            title="Home"
+                            className="cursor-pointer flex items-center"
+                                    >
+                            <IconLogo className="h-12 w-auto text-white" />
+                        </div>
                         
                         <div className="h-8 w-px bg-slate-700 mx-1 hidden sm:block"></div>
 
