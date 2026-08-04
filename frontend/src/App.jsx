@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import SearchHero from './components/SearchHero';
 import StatCard from './components/StatCard';
@@ -24,6 +24,30 @@ function App() {
     const [activeTab, setActiveTab] = useState('frequency');
     const [showFilters, setShowFilters] = useState(false);
     const [mainTab, setMainTab] = useState('home');
+
+
+    useEffect(() => {
+            // The condition below ensures that the alert will only appear if the user has already performed a search (i.e., if there is data to be lost).
+            // If you want the alert to appear ALWAYS (even with an empty screen), just remove the "if" below.
+            if (!rawData || rawData.length === 0) {
+                return;
+            }
+  
+            const handleBeforeUnload = (event) => {
+                // O preventDefault and the event.returnValue are required for most modern browsers to trigger the confirmation dialog.
+                event.preventDefault();
+                event.returnValue = '';
+                return '';
+            };
+  
+            // Add the "spy" to listen for the beforeunload event, which is triggered when the user tries to close the tab or navigate away.
+            window.addEventListener('beforeunload', handleBeforeUnload);
+  
+            // Remove the "spy" when the component is unmounted to avoid memory leaks
+            return () => {
+                window.removeEventListener('beforeunload', handleBeforeUnload);
+            };
+        }, [rawData]); // The array [rawData] makes the React update this rule whenever the search data changes.
 
     const requestBody = `Hello, I would like to request data for the following search parameters:
 
