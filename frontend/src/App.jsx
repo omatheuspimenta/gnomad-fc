@@ -105,7 +105,7 @@ ${JSON.stringify(filters, null, 2)}`;
 
                             {showFilters && (
                                 <div className="p-6 bg-slate-50 border-b border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-                                    <div className="space-y-2">
+                                    {/* <div className="space-y-2">
                                         <label className="text-xs font-bold text-slate-500 uppercase">Frequency (AF) Range</label>
                                         <div className="flex items-center gap-2">
                                             <input type="range" min="0" max="1" step="0.0001" value={filters.minAF} onChange={e => setFilters({ ...filters, minAF: parseFloat(e.target.value) })} className="flex-1" />
@@ -117,6 +117,50 @@ ${JSON.stringify(filters, null, 2)}`;
                                         <div className="flex items-center gap-2">
                                             <input type="range" min="0" max="1" step="0.01" value={filters.maxFMissing} onChange={e => setFilters({ ...filters, maxFMissing: parseFloat(e.target.value) })} className="flex-1" />
                                             <span className="text-xs font-mono bg-white border px-2 py-1 rounded">{filters.maxFMissing.toFixed(2)}</span>
+                                        </div>
+                                    </div> */}
+                                    <div className="space-y-2">                                                                                                                              
+                                        <label className="text-xs font-bold text-slate-500 uppercase">Frequency (AF) Range</label>                                                           
+                                        <div className="flex items-center gap-2">                                                                                                            
+                                            <input type="range" min="0" max="1" step="0.0001" value={filters.minAF} onChange={e => setFilters({ ...filters, minAF: parseFloat(e.target.value)
+                                })} className="flex-1" />                                                                                                                                  
+                                            {/* Nova tag input adicionada abaixo */}                                                                                                         
+                                            <input                                                                                                                                           
+                                                type="number"                                                                                                                                
+                                                min="0"                                                                                                                                      
+                                                max="1"                                                                                                                                      
+                                                step="0.0001"                                                                                                                                
+                                                value={filters.minAF}                                                                                                                        
+                                                onChange={e => {                                                                                                                             
+                                                    // Previne erro caso o usuário apague tudo no input (campo vazio)                                                                        
+                                                    const val = e.target.value === '' ? 0 : parseFloat(e.target.value);                                                                      
+                                                    setFilters({ ...filters, minAF: val });                                                                                                  
+                                                }}                                                                                                                                           
+                                                className="text-xs font-mono bg-white border border-slate-300 px-2 py-1 rounded w-24 outline-none focus:ring-2 focus:ring-brand-500          
+                                focus:border-brand-500"                                                                                                                                    
+                                            />                                                                                                                                               
+                                        </div>                                                                                                                                               
+                                    </div> 
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-slate-500 uppercase">Max Missing (F_MISSING)</label>
+                                        <div className="flex items-center gap-2">
+                                            <input type="range" min="0" max="1" step="0.01" value={filters.maxFMissing} onChange={e => setFilters({ ...filters, maxFMissing: parseFloat(e.   
+                                target.value) })} className="flex-1" />
+                                            {/* Nova tag input adicionada abaixo */}
+                                            <input 
+                                                type="number" 
+                                                min="0" 
+                                                max="1" 
+                                                step="0.01" 
+                                                value={filters.maxFMissing} 
+                                                onChange={e => {
+                                                    // Previne erro caso o usuário apague tudo no input (campo vazio)
+                                                    const val = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                                                    setFilters({ ...filters, maxFMissing: val });
+                                                }}
+                                                className="text-xs font-mono bg-white border border-slate-300 px-2 py-1 rounded w-24 outline-none focus:ring-2 focus:ring-brand-500          
+                                focus:border-brand-500" 
+                                            />
                                         </div>
                                     </div>
                                     {['consequence', 'variantType', 'clinvar'].map(f => (
