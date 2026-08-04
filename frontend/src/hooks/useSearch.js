@@ -83,7 +83,7 @@ export const useSearch = () => {
             const af = v.gnomad_af !== undefined ? v.gnomad_af : 0;
             // const cons = (v.all_consequences || []).join(' ').toLowerCase();
             const vType = (v.variant_type || '').toLowerCase();
-            const clinvarSig = (v.clinvar_significance || '').toLowerCase();
+            // const clinvarSig = (v.clinvar_significance || '').toLowerCase();
             const rsidVal = (v.rsid || '').toLowerCase();
             const geneVal = (v.gene || '').toUpperCase();
 
@@ -104,7 +104,29 @@ export const useSearch = () => {
                     if (!hasMatch) return false;
                 }
             if (filters.variantType && !vType.includes(filters.variantType.toLowerCase())) return false;
-            if (filters.clinvar && !clinvarSig.includes(filters.clinvar.toLowerCase())) return false;
+            // if (filters.clinvar && !clinvarSig.includes(filters.clinvar.toLowerCase())) return false;
+            if (filters.clinvar) {
+                const term = filters.clinvar.toLowerCase();
+                
+                // clinvar significance can be (ex: "Pathogenic, Likely_pathogenic")
+                // transform into array to apply the same (.some) logic as the consequence filter
+                let clinvarArray = [];
+                if (Array.isArray(v.clinvar_significance)) {
+                    clinvarArray = v.clinvar_significance;
+                } else if (typeof v.clinvar_significance === 'string') {
+                    // Split by comma or slash, common separators in ClinVar
+                    clinvarArray = v.clinvar_significance.split(/[,/]/);
+                }
+        
+                // Check if any of the terms in the array match
+                const hasMatch = clinvarArray.some(c => {
+                    const clinvarValue = c.trim().toLowerCase();
+                    // Use the same strict/prefix match logic as used in consequence
+                    return clinvarValue.startsWith(term) || clinvarValue === term;
+                });
+        
+                if (!hasMatch) return false;
+            }
             if (filters.rsid && !rsidVal.includes(filters.rsid.toLowerCase())) return false;
 
             // Handle gene filtering (check both gene string and genes array)
