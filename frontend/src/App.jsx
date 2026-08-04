@@ -124,7 +124,7 @@ ${JSON.stringify(filters, null, 2)}`;
                                         <div className="flex items-center gap-2">                                                                                                            
                                             <input type="range" min="0" max="1" step="0.0001" value={filters.minAF} onChange={e => setFilters({ ...filters, minAF: parseFloat(e.target.value)
                                 })} className="flex-1" />                                                                                                                                  
-                                            {/* Nova tag input adicionada abaixo */}                                                                                                         
+                                            {/* new input tag below */}                                                                                                         
                                             <input                                                                                                                                           
                                                 type="number"                                                                                                                                
                                                 min="0"                                                                                                                                      
@@ -132,7 +132,7 @@ ${JSON.stringify(filters, null, 2)}`;
                                                 step="0.0001"                                                                                                                                
                                                 value={filters.minAF}                                                                                                                        
                                                 onChange={e => {                                                                                                                             
-                                                    // Previne erro caso o usuário apague tudo no input (campo vazio)                                                                        
+                                                    // prevents errors in case of user deletes everything in the input (empty field)                                                                       
                                                     const val = e.target.value === '' ? 0 : parseFloat(e.target.value);                                                                      
                                                     setFilters({ ...filters, minAF: val });                                                                                                  
                                                 }}                                                                                                                                           
@@ -146,7 +146,7 @@ ${JSON.stringify(filters, null, 2)}`;
                                         <div className="flex items-center gap-2">
                                             <input type="range" min="0" max="1" step="0.01" value={filters.maxFMissing} onChange={e => setFilters({ ...filters, maxFMissing: parseFloat(e.   
                                 target.value) })} className="flex-1" />
-                                            {/* Nova tag input adicionada abaixo */}
+                                            {/* new input tag include below */}
                                             <input 
                                                 type="number" 
                                                 min="0" 
@@ -154,7 +154,7 @@ ${JSON.stringify(filters, null, 2)}`;
                                                 step="0.01" 
                                                 value={filters.maxFMissing} 
                                                 onChange={e => {
-                                                    // Previne erro caso o usuário apague tudo no input (campo vazio)
+                                                    // Prevents errors in case the user deletes everything in the input (empty field)
                                                     const val = e.target.value === '' ? 0 : parseFloat(e.target.value);
                                                     setFilters({ ...filters, maxFMissing: val });
                                                 }}
