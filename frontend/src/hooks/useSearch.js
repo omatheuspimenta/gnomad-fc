@@ -7,10 +7,10 @@ const countValues = (arr) => arr.reduce((acc, curr) => { acc[curr] = (acc[curr] 
 const categorizeFrequency = (af) => {
     if (af === null || af === undefined) return 'Unknown';
     if (af < 0.0001) return 'Ultra-rare (<0.01%)';
-    if (af < 0.001) return 'Rare (0.01-0.1%)';
-    if (af < 0.01) return 'Low freq (0.1-1%)';
-    if (af < 0.05) return 'Common (1-5%)';
-    return 'Very common (>5%)';
+    if (af < 0.01) return 'Rare (0.01-1%)';
+    // if (af < 0.01) return 'Low freq (0.1-1%)';
+    // if (af < 0.5) return 'Common (1-5%)';
+    return 'Polymorphic (1-50%)';
 };
 
 export const useSearch = () => {

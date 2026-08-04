@@ -69,3 +69,5 @@ data/logs
 certs/
 
 data/example.json
+data/*
+data/
