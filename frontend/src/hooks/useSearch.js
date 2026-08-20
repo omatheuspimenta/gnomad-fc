@@ -4,12 +4,25 @@ import { searchVariants } from '../api/client';
 // --- HELPERS ---
 const calculateMean = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
 const countValues = (arr) => arr.reduce((acc, curr) => { acc[curr] = (acc[curr] || 0) + 1; return acc; }, {});
-const categorizeFrequency = (af) => {
-    if (af === null || af === undefined) return 'Unknown';
-    if (af < 0.0001) return 'Ultra-rare (<0.01%)';
-    if (af < 0.01) return 'Rare (0.01-1%)';
-    // if (af < 0.01) return 'Low freq (0.1-1%)';
-    // if (af < 0.5) return 'Common (1-5%)';
+// const categorizeFrequency = (af) => {
+//     if (af === null || af === undefined) return 'Unknown';
+//     if (af < 0.0001) return 'Ultra-rare (<0.01%)';
+//     if (af < 0.01) return 'Rare (0.01-1%)';
+//     // if (af < 0.01) return 'Low freq (0.1-1%)';
+//     // if (af < 0.5) return 'Common (1-5%)';
+//     return 'Polymorphic (1-50%)';
+// };
+const categorizeFrequency = (af) => {                                                                                                                                                                         
+    if (af === null || af === undefined) return 'Unknown';                                                                                                                                                    
+                                                                                                                                                                                                                
+    // MAF: if AF > 0.5, calculate 1 - AF                                                                                                                                                                 
+    let maf = af;                                                                                                                                                                                             
+    if (maf > 0.5) {                                                                                                                                                                                          
+        maf = 1 - maf;                                                                                                                                                                                        
+    }                                                                                                                                                                                                         
+                                                                                                                                                                                                                
+    if (maf < 0.0001) return 'Ultra-rare (<0.01%)';
+    if (maf < 0.01) return 'Rare (0.01-1%)';
     return 'Polymorphic (1-50%)';
 };
 
@@ -147,16 +160,18 @@ export const useSearch = () => {
     const stats = useMemo(() => {
         // If we have server-side statistics (Global Stats), use them directly
         // Commented to allow client-side calculation for now and update all stats based on filteredVariants
-        // if (rawData && rawData.statistics) {
-        //     return rawData.statistics;
-        // }
+        if (rawData && rawData.statistics) {
+            return rawData.statistics;
+        }
 
         // Fallback to client-side calculation (e.g. for single variant search or legacy)
         if (!filteredVariants || filteredVariants.length === 0) return null;
 
-        const gnomadAfs = filteredVariants.map(v => v.gnomad_af).filter(n => typeof n === 'number');
+        // const gnomadAfs = filteredVariants.map(v => v.gnomad_af).filter(n => typeof n === 'number');
+        const gnomadAfs = filteredVariants.map(v => v.gnomad_af).filter(n => typeof n === 'number').map(af => af > 0.5 ? 1 - af : af);
         const gnomadMeanAF = calculateMean(gnomadAfs);
-        const localAfs = filteredVariants.map(v => v.af).filter(n => typeof n === 'number');
+        // const localAfs = filteredVariants.map(v => v.af).filter(n => typeof n === 'number');
+        const localAfs = filteredVariants.map(v => v.af).filter(n => typeof n === 'number').map(af => af > 0.5 ? 1 - af : af);
         const localMeanAF = calculateMean(localAfs);
         const clinvarCount = filteredVariants.filter(v => v.clinvar_significance).length;
 

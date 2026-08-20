@@ -39,31 +39,56 @@ def get_global_stats_query(query_conditions: Dict[str, Any]) -> Dict[str, Any]:
                 "terms": {"field": "all_consequences.keyword", "size": 20}
             },
             
+            # # 5. AF Ranges (for Pie Chart)
+            # "af_ranges": {
+            #     "range": {
+            #         "field": "gnomad_af",
+            #         "ranges": [
+            #             {"to": 0.0001, "key": "Ultra-rare (<0.01%)"},
+            #             # {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
+            #             {"from": 0.0001, "to": 0.01, "key": "Rare (0.01-1%)"},
+            #             {"from": 0.01, "to": 0.5, "key": "Polymorphic (1-50%)"},
+            #             # {"from": 0.05, "key": "Very common (>5%)"}
+            #         ]
+            #     }
+            # },
             # 5. AF Ranges (for Pie Chart)
             "af_ranges": {
                 "range": {
-                    "field": "gnomad_af",
-                    "ranges": [
-                        {"to": 0.0001, "key": "Ultra-rare (<0.01%)"},
-                        # {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
+            "script": {
+                        "source": "if (doc.containsKey('gnomad_af') && doc['gnomad_af'].size() > 0) { double af = doc['gnomad_af'].value; return af > 0.5 ? 1.0 - af : af; } else { return -1; }"             
+            },
+            "ranges": [
+                        {"from": 0.0, "to": 0.0001, "key": "Ultra-rare (<0.01%)"},
                         {"from": 0.0001, "to": 0.01, "key": "Rare (0.01-1%)"},
                         {"from": 0.01, "to": 0.5, "key": "Polymorphic (1-50%)"},
-                        # {"from": 0.05, "key": "Very common (>5%)"}
-                    ]
+            ]
                 }
             },
             
             # 5b. Local AF Ranges (Paraná cohort)
+            # "local_af_ranges": {
+            #     "range": {
+            #         "field": "af",
+            #         "ranges": [
+            #             {"to": 0.0001, "key": "Ultra-rare (<0.01%)"},
+            #             # {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
+            #             {"from": 0.0001, "to": 0.01, "key": "Rare (0.01-1%)"},
+            #             {"from": 0.01, "to": 0.5, "key": "Polymorphic (1-50%)"},
+            #             # {"from": 0.05, "key": "Very common (>5%)"}
+            #         ]
+            #     }
+            # },
             "local_af_ranges": {
                 "range": {
-                    "field": "af",
-                    "ranges": [
-                        {"to": 0.0001, "key": "Ultra-rare (<0.01%)"},
-                        # {"from": 0.0001, "to": 0.001, "key": "Rare (0.01-0.1%)"},
+            "script": {
+                        "source": "if (doc.containsKey('af') && doc['af'].size() > 0) { double af = doc['af'].value; return af > 0.5 ? 1.0 - af : af; } else { return -1; }"             
+            },
+            "ranges": [
+                        {"from": 0.0, "to": 0.0001, "key": "Ultra-rare (<0.01%)"},
                         {"from": 0.0001, "to": 0.01, "key": "Rare (0.01-1%)"},
                         {"from": 0.01, "to": 0.5, "key": "Polymorphic (1-50%)"},
-                        # {"from": 0.05, "key": "Very common (>5%)"}
-                    ]
+            ]
                 }
             },
             
