@@ -315,6 +315,7 @@ class Position(BaseClass):
     refAllele: str
     altAlleles: List[str]
     filters: Optional[List[str]] = None
+    quality: Optional[float] = None,
     mappingQuality: Optional[float] = None
     cytogeneticBand: Optional[str] = None
     vcfInfo: Optional[Dict[str, Any]] = None
@@ -571,7 +572,7 @@ def variant_to_dict(
         "filters": ",".join(position.filters) if position.filters else None,
         "mapping_quality": position.mappingQuality,
         "fisher_strand_bias": variant_dict.get("fisherStrandBias"),
-        "quality": variant_dict.get("quality"),
+        "quality": position.quality,
         # Local cohort metrics (from vcfInfo)
         "f_missing": None,
         "af": None,
