@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     
     # Elasticsearch
     ELASTICSEARCH_URL: str
+    ELASTICSEARCH_USER: str = "elastic"
+    ELASTICSEARCH_PASSWORD: str
     ES_INDEX: str
     
     # CORS

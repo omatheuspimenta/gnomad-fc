@@ -6,7 +6,7 @@ class ElasticsearchClient:
 
     async def connect(self):
         if self.client is None:
-            self.client = AsyncElasticsearch(settings.ELASTICSEARCH_URL)
+            self.client = AsyncElasticsearch(settings.ELASTICSEARCH_URL, http_auth=(settings.ELASTICSEARCH_USER, settings.ELASTICSEARCH_PASSWORD))
             print(f"✓ Connecting to Elasticsearch at {settings.ELASTICSEARCH_URL}")
 
     async def close(self):

@@ -12,7 +12,7 @@ import argparse
 import hail as hl
 
 
-def export_table(input_path: str, host: str, port: int, index: str) -> None:
+def export_table(input_path: str, host: str, port: int, index: str, user: str, password: str) -> None:
     """
     Export a Hail Table to Elasticsearch.
 
@@ -58,8 +58,10 @@ def export_table(input_path: str, host: str, port: int, index: str) -> None:
         index=index,
         index_type='_doc',
         block_size=100,
-        config={
-            "es.nodes.wan.only": "true"
+        config={                                                                                                                                         
+                "es.nodes.wan.only": "true",                                                                                                                 
+                "es.net.http.auth.user": user,                                                                                                               
+                "es.net.http.auth.pass": password                                                                                                            
         }
     )
     
@@ -95,11 +97,23 @@ def get_parser() -> argparse.ArgumentParser:
         default=9200, 
         help="Elasticsearch port"
     )
+    parser.add_argument(                                                                                                                                 
+            "--index",                                                                                                                                       
+            type=str, 
+            default="fiocruz_variants",
+            help="Elasticsearch index name"
+        )
     parser.add_argument(
-        "--index", 
+        "--user", 
         type=str, 
-        default="fiocruz_variants",
-        help="Elasticsearch index name"
+        default="elastic", 
+        help="Elasticsearch username"
+    )
+    parser.add_argument(
+        "--password", 
+        type=str, 
+        required=True, 
+        help="Elasticsearch password"
     )
     return parser
 
@@ -110,10 +124,12 @@ def main() -> None:
     args = parser.parse_args()
     
     export_table(
-        input_path=args.input,
-        host=args.host,
-        port=args.port,
-        index=args.index
+            input_path=args.input,
+            host=args.host,
+            port=args.port,
+            index=args.index,
+            user=args.user,
+            password=args.password
     )
 
 

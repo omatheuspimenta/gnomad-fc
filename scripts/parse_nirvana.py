@@ -1070,18 +1070,18 @@ if __name__ == "__main__":
     
     print("\nExporting to Elasticsearch...")
 
-    hl.export_elasticsearch(
-        ht,
-        host=args.host,
-        port=args.port,
-        index=args.index,
-        index_type='_doc',
-        block_size=10000,
-        config={
-            "es.nodes.wan.only": "true"   # necessário quando acessar container via IP
-        }
+    # hl.export_elasticsearch(
+    #     ht,
+    #     host=args.host,
+    #     port=args.port,
+    #     index=args.index,
+    #     index_type='_doc',
+    #     block_size=10000,
+    #     config={
+    #         "es.nodes.wan.only": "true"   # necessário quando acessar container via IP
+    #     }
 
-    )
+    # )
 
     print(
         "Done!"

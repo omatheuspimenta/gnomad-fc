@@ -212,7 +212,7 @@ python scripts/parse_nirvana.py --input <path_to_nirvana.json> --output <path_to
 Loads the processed data into the running Elasticsearch instance.
 
 ```bash
-python scripts/export_to_es.py --input <path_to_output.json> --index variants
+python scripts/export_to_es.py --input <path_to_output.json> --index variants --user "elastic" --password "SENHA_TROCAR"
 ```
 
 ---
