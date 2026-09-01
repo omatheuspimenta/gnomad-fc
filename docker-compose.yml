@@ -29,6 +29,10 @@ services:
         hard: 65536
     volumes:
       - aprovar-db:/usr/share/elasticsearch/data
+      # Production
+      # - /opt/aprovar/certificados:/usr/share/elasticsearch/config/certs:ro
+      # Development
+      - ./certs:/usr/share/elasticsearch/config/certs:ro
     networks:
       - aprovar
 

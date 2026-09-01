@@ -61,7 +61,10 @@ def export_table(input_path: str, host: str, port: int, index: str, user: str, p
         config={                                                                                                                                         
                 "es.nodes.wan.only": "true",                                                                                                                 
                 "es.net.http.auth.user": user,                                                                                                               
-                "es.net.http.auth.pass": password                                                                                                            
+                "es.net.http.auth.pass": password,   
+                # Self signed certificate settings
+                "es.net.ssl": "true",
+                "es.net.ssl.cert.allow.self.signed": "true"                                                                                               
         }
     )
     
